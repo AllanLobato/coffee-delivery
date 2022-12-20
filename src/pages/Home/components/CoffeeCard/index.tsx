@@ -6,7 +6,7 @@ import { AddCartWrapper, CardFooter, CoffeeCardContainer, Description, Name, Tag
 
 export interface Coffee {
     id: number;
-    tags: string;
+    tags: string[];
     name: string;
     description: string;
     photo: string;

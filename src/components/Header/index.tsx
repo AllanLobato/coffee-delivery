@@ -1,21 +1,26 @@
 import { HeaderButtonContainer, HeaderContainer, HeaderButton } from "./styles";
 import coffeeLogoImg from "../../assets/Logo.svg"
 import { MapPin, ShoppingCart } from "phosphor-react";
+import { NavLink } from "react-router-dom";
 
 export function Header() {
     return(
         <HeaderContainer>
             <div className="container">
+                <NavLink to="/">
                 <img src={coffeeLogoImg} />
+                </NavLink>
 
                 <HeaderButtonContainer>
                     <HeaderButton variant="purple">
                         <MapPin size={20} weight="fill" />
                         Porto Alegre, RS
                     </HeaderButton>
-                    <HeaderButton variant="yellow">
+                   <NavLink to="/completeOrder">
+                   <HeaderButton variant="yellow">
                         <ShoppingCart size={20} weight="fill" />
                     </HeaderButton>
+                   </NavLink>
                 </HeaderButtonContainer>
             </div>
         </HeaderContainer>
