@@ -10,12 +10,12 @@ export const QuantityInputContainer = styled.div<QuantityInputContainerProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4px;
+  gap: 2px;
   border-radius: 6px;
   input {
     text-align: center;
     width: 100%;
-    background: none;
+    background: ${({ theme }) => theme.colors["base-button"]};
     border: none;
     color: ${({ theme }) => theme.colors["base-title"]};
     &:focus {
