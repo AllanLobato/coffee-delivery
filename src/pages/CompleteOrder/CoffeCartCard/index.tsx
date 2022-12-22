@@ -3,46 +3,58 @@ import { QuantityInput } from "../../../components/QuantityInput";
 import { RegularText } from "../../../components/Typography";
 import { CartItem } from "../../../contexts/CartContext";
 import { coffees } from "../../../data/coffee";
+import { useCart } from "../../../hooks/useCart";
 import { formatMoney } from "../../../utils/formatMoney";
-import { ActionsContainer, CoffeeCartCardContainer, RemoveButton } from "./styles";
-
-// export interface Coffee {
-//     id: number;
-//     tags: string[];
-//     name: string;
-//     description: string;
-//     photo: string;
-//     price: number;
-// }
-
-// interface CoffeeProps {
-//     coffee: Coffee;
-// }
+import {
+  ActionsContainer,
+  CoffeeCartCardContainer,
+  RemoveButton,
+} from "./styles";
 
 interface CoffeeCartCardProps {
-    coffee: CartItem
+  coffee: CartItem;
 }
 
-export function CoffeeCartCard({coffee}: CoffeeCartCardProps) {
-    const coffeeTotal = coffee.price * coffee.quantity
-    const formattedPrice = formatMoney(coffeeTotal)
-    return (
-        <CoffeeCartCardContainer>
-            <div>
-            <img src={`/coffees/${coffee.photo}`} />
-                <div>
-                    <RegularText color="subtitle">{coffee.name}</RegularText>
-                    <ActionsContainer>
-                        <QuantityInput size="small" quantity={coffee.quantity} />
-                        <RemoveButton>
-                            <Trash size={16}/>
-                            Remover
-                        </RemoveButton>
-                    </ActionsContainer>
-                </div>
-            </div>
+export function CoffeeCartCard({ coffee }: CoffeeCartCardProps) {
+  const { changeCartItemQuantity, removeCartItem } = useCart();
 
-            <p>R$ {formattedPrice}</p>
-        </CoffeeCartCardContainer>
-    )
+  function handleIncrease() {
+    changeCartItemQuantity(coffee.id, "increase");
+  }
+
+  function handleDecrease() {
+    changeCartItemQuantity(coffee.id, "decrease");
+  }
+
+  function handleRemove(){
+    removeCartItem(coffee.id)
+  }
+
+  const coffeeTotal = coffee.price * coffee.quantity;
+
+  const formattedPrice = formatMoney(coffeeTotal);
+  return (
+    <CoffeeCartCardContainer>
+      <div>
+        <img src={`/coffees/${coffee.photo}`} />
+        <div>
+          <RegularText color="subtitle">{coffee.name}</RegularText>
+          <ActionsContainer>
+            <QuantityInput
+              size="small"
+              onIncrease={handleIncrease}
+              onDecrease={handleDecrease}
+              quantity={coffee.quantity}
+            />
+            <RemoveButton onClick={handleRemove}>
+              <Trash size={16} />
+              Remover
+            </RemoveButton>
+          </ActionsContainer>
+        </div>
+      </div>
+
+      <p>R$ {formattedPrice}</p>
+    </CoffeeCartCardContainer>
+  );
 }
