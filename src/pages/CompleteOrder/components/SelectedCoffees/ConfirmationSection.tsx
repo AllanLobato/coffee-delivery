@@ -30,7 +30,7 @@ export function ConfirmationSection() {
         </div>
 
         {/* Desabilita o botao caso o carrinho esteja vazio */}
-        <Button text="confirmar Pedido" disabled={cartQuantity <= 0} /> 
+        <Button text="confirmar Pedido" disabled={cartQuantity <= 0} type="submit" /> 
        </ConfirmationSectionContainer> 
     )
 

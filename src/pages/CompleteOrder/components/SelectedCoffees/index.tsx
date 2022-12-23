@@ -4,7 +4,7 @@ import { CoffeeCartCard } from "../../CoffeCartCard";
 import { ConfirmationSection } from "./ConfirmationSection";
 import { DetailsContainer, SelectedCoffeesContainer } from "./styles";
 
-export function SelectedCoffes() {
+export function SelectedCoffees() {
     const { cartItems } = useCart();
     return(
         <SelectedCoffeesContainer>

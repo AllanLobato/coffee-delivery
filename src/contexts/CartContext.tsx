@@ -16,7 +16,10 @@ interface CartContextType {
     type: "increase" | "decrease"
   ) => void;
   removeCartItem: (cartItemId: number) => void;
+  cleanCart: () => void;
 }
+
+export const CartContext = createContext({} as CartContextType);
 
 interface CartContextProviderProps {
   children: ReactNode;
@@ -24,15 +27,13 @@ interface CartContextProviderProps {
 
 const COFFEE_ITEMS_STORAGE_KEY = "coffeeDelivery:cartItems";
 
-export const CartContext = createContext({} as CartContextType);
-
 export function CartContextProvider({ children }: CartContextProviderProps) {
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     const storedCartItems = localStorage.getItem(COFFEE_ITEMS_STORAGE_KEY);
-    if(storedCartItems) {
+    if (storedCartItems) {
       return JSON.parse(storedCartItems);
     }
-    return[];
+    return [];
   });
 
   const cartQuantity = cartItems.length;
@@ -90,19 +91,24 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     setCartItems(newCart);
   }
 
+  function cleanCart() {
+    setCartItems([]);
+  }
+
   useEffect(() => {
-    localStorage.setItem(COFFEE_ITEMS_STORAGE_KEY, JSON.stringify(cartItems))
-  }, [cartItems])
+    localStorage.setItem(COFFEE_ITEMS_STORAGE_KEY, JSON.stringify(cartItems));
+  }, [cartItems]);
 
   return (
     <CartContext.Provider
       value={{
         cartItems,
-        cartQuantity,
         addCoffeeToCart,
+        cartQuantity,
         changeCartItemQuantity,
         removeCartItem,
         cartItemsTotal,
+        cleanCart,
       }}
     >
       {children}
